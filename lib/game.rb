@@ -5,25 +5,27 @@ def self.set_game
   white = []
   black_pawns = []
   white_pawns = []
-  black << Piece.new(:black,:rook)
-    black << Piece.new(:black,:knight)
-    black << Piece.new(:black,:bishop)
-    black << Piece.new(:black,:queen)
-    black << Piece.new(:black,:king)
-    black << Piece.new(:black,:bishop)
-    black << Piece.new(:black,:knight)
-    black << Piece.new(:black,:rook)
-    white << Piece.new(:white,:rook)
-    white << Piece.new(:white,:knight)
-    white << Piece.new(:white,:bishop)
-    white << Piece.new(:white,:queen)
-    white << Piece.new(:white,:king)
-    white << Piece.new(:white,:bishop)
-    white << Piece.new(:white,:knight)
-    white << Piece.new(:white,:rook)
+  black << Piece.new(:black,:rook,[0,0])
+    black << Piece.new(:black,:knight,[0,1])
+    black << Piece.new(:black,:bishop,[0,2])
+    black << Piece.new(:black,:queen,[0,3])
+    black << Piece.new(:black,:king,[0,4])
+    black << Piece.new(:black,:bishop,[0,5])
+    black << Piece.new(:black,:knight,[0,6])
+    black << Piece.new(:black,:rook,[0,7])
+    white << Piece.new(:white,:rook,[7,0])
+    white << Piece.new(:white,:knight,[7,1])
+    white << Piece.new(:white,:bishop,[7,2])
+    white << Piece.new(:white,:queen,[7,3])
+    white << Piece.new(:white,:king,[7,4])
+    white << Piece.new(:white,:bishop,[7,5])
+    white << Piece.new(:white,:knight,[7,6])
+    white << Piece.new(:white,:rook,[7,7])
+    i=0
     8.times do 
-  black_pawns << Piece.new(:black,:pawn) 
-  white_pawns << Piece.new(:white,:pawn) 
+    black_pawns << Piece.new(:black,:pawn,[1,i]) 
+    white_pawns << Piece.new(:white,:pawn,[6,i])
+    i += 1
   end
   
   Board.board[0] = black
