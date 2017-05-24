@@ -7,35 +7,50 @@ class Board
     @color = nil
   end  
   def to_s
-    "  "
+    " "
   end  
     
   end  
   
-  @@board = Array.new(8){Array.new(8){PlaceHolder.new}}  
-  def self.board *args
+  attr_accessor :white_king , :black_king
+   
+  def initialize 
+  @board =  Array.new(8){Array.new(8){PlaceHolder.new}} 
+  @white_king = nil 
+  @black_king = nil
+  end  
+  
+  def board *args
     if args.length == 0
-    @@board 
+    @board 
     else
-     @@board[args[0]][args[1]] 
+     @board[args[0]][args[1]] 
     end  
     end
-   def self.draw
-     @@board.each_with_index {|row,i| puts "#{i+1}  #{row.join("  ")}"}
+   def draw
+     @board.each_with_index {|row,i| puts "#{i+1}  #{row.join("  ")}"}
      print "   "
-     ("A".."H").each {|l| print "#{l}   "}
+     ("A".."H").each {|l| print "#{l}  "}
      puts
      puts
     end
     
-    def self.place piece 
-      @@board[piece.position[0]][piece.position[1]] = piece
+    def place piece 
+      @board[piece.position[0]][piece.position[1]] = piece
     end
     
-    def self.remove piece
-      @@board[piece.position[0]][piece.position[1]] = PlaceHolder.new
+    def remove piece
+      @board[piece.position[0]][piece.position[1]] = PlaceHolder.new
     end 
   
+  
+  def get_king color 
+  if color == :white
+  @white_king
+  else
+  @black_king  
+  end
+  end  
   
     
 end

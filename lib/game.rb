@@ -1,6 +1,21 @@
+require './piece.rb'
+require './board.rb'
+require './helper.rb'
+
 class Game
+
+Player = Struct.new(:color,:opponent)  
+
+attr_accessor :player1, :player2, :board
+
+def initialize 
+@player1,@player2 = Player.new(:white, :black),Player.new(:black, :white)  
+@board = Board.new
+set_game
+end  
+  
 #  SET THE BOARD 
-def self.set_game
+def set_game
   black = []
   white = []
   black_pawns = []
@@ -28,11 +43,62 @@ def self.set_game
     i += 1
   end
   
-  Board.board[0] = black
-  Board.board[1] = black_pawns
-  Board.board[6] = white_pawns
-  Board.board[7] = white
-  Board.draw
+  @board.board[0] = black
+  @board.board[1] = black_pawns
+  @board.board[6] = white_pawns
+  @board.board[7] = white
+  @board.white_king = @board.board(7,4)
+  @board.black_king = @board.board(0,4)
+  @board.draw
   nil
   end
-end
+  
+  
+def self.start 
+  
+game = Game.new  
+
+player = game.player1
+check = false
+while true 
+puts "#{player.color} enter your move as A7 A6"
+choice = move(gets.chomp!.downcase)
+
+piece = game.board.board(choice[0][0],choice[0][1])
+dest = game.board.board(choice[1][0],choice[1][1])
+
+if piece.color == player.color && piece.move(choice[1], game.board)
+piece.move choice[1], game.board
+  # This if statement checks for invali move of putting player's own king in risk and reverses the move
+  if game.board.get_king(player.color).check(game.board)
+  puts "You CAN'T put king in risk"
+  game.board.remove piece
+  piece.position = choice[0]
+  game.board.place piece
+  redo
+  end  
+game.board.draw
+if game.board.get_king(player.opponent).check(game.board)
+check = true
+puts "CHECK!"
+end #if for check  
+
+player == game.player1 ? player = game.player2 : player = game.player1
+else 
+puts "Enter a valid move"  
+
+end #if for valid move  
+
+
+
+
+end  # end while
+
+
+
+end  # end start()
+
+
+  
+  
+end #end Game 

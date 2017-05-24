@@ -1,5 +1,5 @@
 # CREATE THE PIECES
-require_relative './moves.rb'
+require './moves.rb'
 class Piece
   include Moves
   attr_accessor :color, :type, :position, :is_alive
@@ -36,37 +36,42 @@ class Piece
     end
     
 
-def move dest 
-  if (self.possible_moves).include?(dest)
-  Board.remove self  
+def move dest, board
+  if possible_moves(board).include?(dest)
+  board.remove self  
   @position = dest
-  Board.place self
+  board.place self
   else 
-  puts "Invalid Move!"  
+  return false 
   end
 end
 
-def possible_moves 
+def possible_moves b
   y = @position[0] 
   x = @position[1]
   possible_moves = [] 
   
   case @type
   when :pawn
-  possible_moves = pawn_moves(y,x)
+  possible_moves = pawn_moves(y,x,b)
   when :rook
-  possible_moves = lateral_moves(y,x)
+  possible_moves = lateral_moves(y,x,b)
   when :bishop
-  possible_moves = diagonal_moves(y,x)
+  possible_moves = diagonal_moves(y,x,b)
   when :queen
-  possible_moves += diagonal_moves(y,x)
-  possible_moves += lateral_moves(y,x)
+  possible_moves += diagonal_moves(y,x,b)
+  possible_moves += lateral_moves(y,x,b)
   when :king
-  possible_moves = king_moves(y,x)
+  possible_moves = king_moves(y,x,b)
   when :knight
-  possible_moves = knight_moves(y,x)  
+  possible_moves = knight_moves(y,x,b)  
   end
   possible_moves
   end  
   
+
+
+  
 end 
+
+
